@@ -1,0 +1,88 @@
+<!-- INCLUDE ucp_header.html -->
+
+<!-- IF S_MODE eq "view" -->
+
+<h2>{L_TITLE}</h2>
+
+<div class="panel">
+	<div class="inner">
+		<span class="corners-top"><span></span></span>
+		<div class="postbody pm">
+			<!-- BEGIN yubikey_messages -->
+				{yubikey_messages.MESSAGE}<br />
+			<!-- END yubikey_messages -->
+
+			<h3>{L_YUBIKEY_LIST}</h3>
+			<!-- BEGIN yubikey -->
+			<dl>
+				<dd>{yubikey.DEVICE} [<a href="{yubikey.DELETE_LINK}">{L_YUBIKEY_DELETE}</a>]</dd>
+			</dl>
+			<!-- BEGINELSE -->
+			<dl>
+				<dd>{L_NO_YUBIKEYS_YOU}</dd>
+			</dl>
+			<!-- END yubikey -->
+
+			<br /><hr />
+
+			<!-- IF S_YUBIKEY_LOGIN_ENABLED -->
+			<form method="post" action="{U_ACTION}">
+			<h3>{L_YUBIKEY_ADD_A}</h3>
+				<fieldset>
+					<dl>
+						<dt><label for="yubikey_otp">{L_YUBIKEY_OTP_FULL}</label><br /><span>{L_YUBIKEY_OTP_FULL_EXPLAIN}</span></dt>
+						<dd><input type="text" name="yubikey_otp" id="yubikey_otp" size="44" maxlength="44" value="" class="inputbox autowidth" /><input class="button1" name="submit" type="submit" value="{L_YUBIKEY_ADD}" /></dd>
+						<dd>
+						{S_FORM_TOKEN}
+						</dd>
+					</dl>
+				</fieldset>
+			</form>
+
+			<br /><hr />
+
+			<form method="post" action="{U_ACTION_SETTINGS}">
+			<h3>{L_YUBIKEY_LOGIN_SETTINGS}</h3>
+				<fieldset>
+					<dl>
+						<dt><label for="req_username1">{L_UCP_YUBIKEY_REQUIRE_USERNAME}:</label><br /><span>{L_UCP_YUBIKEY_REQUIRE_USERNAME_EXPLAIN}<!-- IF U_ACP --> (Note: {L_UCP_YUBIKEY_REQUIRE_USERNAME_NOTE})<!-- ENDIF --></span></dt>
+						<dd>
+							<label for="req_username1"><input type="radio" name="req_username" id="req_username1" value="1"<!-- IF S_REQ_USERNAME --> checked="checked"<!-- ENDIF --> /> {L_YES}</label> 
+							<label for="req_username0"><input type="radio" name="req_username" id="req_username0" value="0"<!-- IF not S_REQ_USERNAME --> checked="checked"<!-- ENDIF --> /> {L_NO}</label>
+						</dd>
+					</dl>
+					<dl>
+						<dt><label for="req_yubikey1">{L_UCP_YUBIKEY_REQUIRE_YUBIKEY}:</label><br /><span>{L_UCP_YUBIKEY_REQUIRE_YUBIKEY_EXPLAIN}</span></dt>
+						<dd>
+							<label for="req_yubikey1"><input type="radio" name="req_yubikey" id="req_yubikey1" value="1"<!-- IF S_REQ_YUBIKEY --> checked="checked"<!-- ENDIF --> /> {L_YES}</label> 
+							<label for="req_yubikey0"><input type="radio" name="req_yubikey" id="req_yubikey0" value="0"<!-- IF not S_REQ_YUBIKEY --> checked="checked"<!-- ENDIF --> /> {L_NO}</label>
+						</dd>
+					</dl>
+					<dl>
+						<dt><label for="multifactor1">{L_UCP_YUBIKEY_MULTIFACTOR}:</label><br /><span>{L_UCP_YUBIKEY_MULTIFACTOR_EXPLAIN}</span></dt>
+						<dd>
+							<label for="multifactor1"><input type="radio" name="multifactor" id="multifactor1" value="1"<!-- IF S_MULTIFACTOR --> checked="checked"<!-- ENDIF --> /> {L_YES}</label> 
+							<label for="multifactor0"><input type="radio" name="multifactor" id="multifactor0" value="0"<!-- IF not S_MULTIFACTOR --> checked="checked"<!-- ENDIF --> /> {L_NO}</label>
+						</dd>
+					</dl>
+				</fieldset>
+				
+				<fieldset class="submit-buttons">
+					<legend>{L_SUBMIT}</legend>
+					<input class="button1" id="submit" name="submit" type="submit" value="{L_SUBMIT}" />
+					{S_FORM_TOKEN}
+				</fieldset>
+			</form>
+			<!-- ELSE -->
+			{L_YUBIKEY_LOGIN_DISABLED}
+			
+			<!-- ENDIF -->
+		
+		</div>
+		<span class="corners-bottom"><span></span></span>
+	</div>
+</div>
+
+<!-- ENDIF -->
+
+<!-- INCLUDE ucp_footer.html -->

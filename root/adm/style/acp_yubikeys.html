@@ -1,0 +1,73 @@
+<!-- INCLUDE overall_header.html -->
+
+<script type="text/javascript">
+// <![CDATA[
+
+	var yubikey_users = new Array();
+		yubikey_users[-1] = '';
+	<!-- BEGIN yubikey_usr -->
+		yubikey_users['{yubikey_usr.YK_ID}'] = '{yubikey_usr.USER_NAME}';
+	<!-- END yubikey_usr -->
+	
+	var yubikey_logins = new Array();
+		yubikey_logins[-1] = '';
+	<!-- BEGIN yubikey_usr -->
+		yubikey_logins['{yubikey_usr.YK_ID}'] = '{yubikey_usr.USER_LASTLOGIN}';
+	<!-- END yubikey_usr -->
+
+	function display_details(option)
+	{
+		document.getElementById('acp_del_yubikey').yubikey_user.value = yubikey_users[option];
+		document.getElementById('acp_del_yubikey').yubikey_lastlogin.value = yubikey_logins[option];
+	}
+
+// ]]>
+</script>
+
+<a name="maincontent"></a>
+
+<h1>{L_TITLE}</h1>
+
+<p>{L_TITLE_EXPLAIN}</p>
+
+<!-- IF S_ERROR -->
+	<div class="errorbox">
+		<h3>{L_WARNING}</h3>
+		<p>{ERROR_MSG}</p>
+	</div>
+<!-- ENDIF -->
+
+<form id="acp_del_yubikey" method="post" action="{U_ACTION}">
+
+<fieldset>
+	<legend>{L_ACP_DEL_YUBIKEYS}</legend>
+
+<!-- IF S_YUBIKEY_OPTIONS -->
+	<dl>
+		<dt><label for="del_yubikey">{L_YUBIKEYS}:</label></dt>
+		<dd><select id="del_yubikey" name="del_yubikey[]" multiple="multiple" size="10" style="width: 50%" onchange="if (this.selectedIndex > -1) display_details(this.options[this.selectedIndex].title); else display_details(-1);">{YUBIKEY_OPTIONS}</select></dd>
+	</dl>
+	<dl>
+		<dt><label for="yubikey_user">{L_YUBIKEY_USER}:</label></dt>
+		<dd><input style="border: 0;" type="text" class="text medium" readonly="readonly" name="yubikey_user" id="yubikey_user" /></dd>
+	</dl>
+	<dl>
+		<dt><label for="yubikey_lastlogin">{L_YUBIKEY_LASTLOGIN}:</label></dt>
+		<dd><input style="border: 0;" type="text" class="text medium" readonly="readonly" name="yubikey_lastlogin" id="yubikey_lastlogin" /></dd>
+	</dl>
+
+	<p class="submit-buttons">
+		<input class="button1" type="submit" id="submit" name="submit" value="{L_SUBMIT}" />&nbsp;
+		<input class="button2" type="reset" id="reset" name="reset" value="{L_RESET}" />
+	</p>
+
+<!-- ELSE -->
+	<p>{L_NO_YUBIKEYS_ANY}</p>
+<!-- ENDIF -->
+
+	{S_FORM_TOKEN}
+</fieldset>
+
+</form>
+
+<!-- INCLUDE overall_footer.html -->

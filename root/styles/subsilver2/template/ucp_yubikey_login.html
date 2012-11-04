@@ -1,0 +1,69 @@
+<!-- INCLUDE ucp_header.html -->
+
+<table class="tablebg" width="100%" cellspacing="1">
+<tr>
+	<th colspan="2" valign="middle">{L_TITLE}</th>
+</tr>
+<!-- BEGIN yubikey_messages -->
+<tr>
+	<td class="row3" colspan="2" align="center"><span class="gensmall">{yubikey_messages.MESSAGE}</span></td>
+</tr>
+<!-- END yubikey_messages -->
+<tr>
+<td class="row1" width="100%" colspan="2"><b class="genmed">{L_YUBIKEY_LIST}</b></td>
+</tr>
+<!-- BEGIN yubikey -->
+<tr>
+	<td class="row1" width="50%"></td>
+	<td class="row2">{yubikey.DEVICE} [<a href="{yubikey.DELETE_LINK}">{L_YUBIKEY_DELETE}</a>]</td>
+</tr>
+<!-- BEGINELSE -->
+<tr>
+	<td class="row1"></td>
+	<td class="row2">{L_NO_YUBIKEYS_YOU}</td>
+</tr>
+<!-- END yubikey -->
+
+<tr>
+	<td colspan="2" class="spacer"></td>
+</tr>
+
+<!-- IF S_YUBIKEY_LOGIN_ENABLED -->
+<tr>
+	<th colspan="2">{L_YUBIKEY_ADD_A}</th>
+</tr>
+<tr>
+	<td class="row1" width="50%"><b class="genmed">{L_YUBIKEY_OTP_FULL}</b><br /><span class="gensmall">{L_YUBIKEY_OTP_FULL_EXPLAIN}</span></td>
+	<td class="row2"><input type="text" class="post" name="yubikey_otp" size="50" maxlength="44" value="" /><input class="btnmain" type="submit" name="submit" value="{L_YUBIKEY_ADD}" /></td>
+</tr>
+	
+<tr>
+	<td colspan="2" class="spacer"></td>
+</tr>
+
+<tr>
+	<th colspan="2">{L_YUBIKEY_LOGIN_SETTINGS}</th>
+</tr>
+<tr> 
+	<td class="row1" width="50%"><b class="genmed">{L_UCP_YUBIKEY_REQUIRE_USERNAME}:</b><br /><span class="genmed">{L_UCP_YUBIKEY_REQUIRE_USERNAME_EXPLAIN}<!-- IF U_ACP --> (Note: {L_UCP_YUBIKEY_REQUIRE_USERNAME_NOTE})<!-- ENDIF --></span></td>
+	<td class="row2"><input type="radio" class="radio" name="req_username" value="1"<!-- IF S_REQ_USERNAME --> checked="checked"<!-- ENDIF --> /><span class="genmed">{L_YES}</span>&nbsp;&nbsp;<input type="radio" class="radio" name="req_username" value="0"<!-- IF not S_REQ_USERNAME --> checked="checked"<!-- ENDIF --> /><span class="genmed">{L_NO}</span></td>
+</tr>
+<tr> 
+	<td class="row1" width="50%"><b class="genmed">{L_UCP_YUBIKEY_REQUIRE_YUBIKEY}:</b><br /><span class="genmed">{L_UCP_YUBIKEY_REQUIRE_YUBIKEY_EXPLAIN}</span></td>
+	<td class="row2"><input type="radio" class="radio" name="req_yubikey" value="1"<!-- IF S_REQ_YUBIKEY --> checked="checked"<!-- ENDIF --> /><span class="genmed">{L_YES}</span>&nbsp;&nbsp;<input type="radio" class="radio" name="req_yubikey" value="0"<!-- IF not S_REQ_YUBIKEY --> checked="checked"<!-- ENDIF --> /><span class="genmed">{L_NO}</span></td>
+</tr>
+<tr> 
+	<td class="row1" width="50%"><b class="genmed">{L_UCP_YUBIKEY_MULTIFACTOR}:</b><br /><span class="genmed">{L_UCP_YUBIKEY_MULTIFACTOR_EXPLAIN}</span></td>
+	<td class="row2"><input type="radio" class="radio" name="multifactor" value="1"<!-- IF S_MULTIFACTOR --> checked="checked"<!-- ENDIF --> /><span class="genmed">{L_YES}</span>&nbsp;&nbsp;<input type="radio" class="radio" name="multifactor" value="0"<!-- IF not S_MULTIFACTOR --> checked="checked"<!-- ENDIF --> /><span class="genmed">{L_NO}</span></td>
+</tr>
+<tr>
+	<td class="cat" colspan="2" align="center">{S_HIDDEN_FIELDS}<input class="btnmain" type="submit" name="submit" value="{L_SUBMIT}" />&nbsp;&nbsp;<input class="btnlite" type="reset" value="{L_RESET}" name="reset" /></td>
+</tr>
+<!-- ELSE -->
+<tr>
+	<td class="row1" width="100%"><b class="genmed">{L_YUBIKEY_LOGIN_DISABLED}</b></td>
+<tr>
+<!-- ENDIF -->
+</table>
+
+<!-- INCLUDE ucp_footer.html -->

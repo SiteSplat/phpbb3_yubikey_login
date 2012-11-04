@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<?xml-stylesheet type="text/xsl" href="modx.prosilver.en.xsl"?>
+<!--NOTICE: Please open this file in your web browser. If presented with a security warning, you may safely tell it to allow the blocked content.-->
+<!--For security purposes, please check: http://www.phpbb.com/mods/ for the latest version of this MOD.\nAlthough MODs are checked before being allowed in the MODs Database there is no guarantee that there are no security problems within the MOD.\nNo support will be given for MODs not found within the MODs Database which can be found at http://www.phpbb.com/mods/-->
+<mod xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.phpbb.com/mods/xml/modx-1.2.5.xsd">
+	<header>
+		<meta name="generator" content="MODX file generated with PP MODX Creator by tumba25 (online version)"/>
+		<license><![CDATA[http://opensource.org/licenses/gpl-license.php GNU General Public License v2]]></license>
+		<title lang="en"><![CDATA[YubiKey Login]]></title>
+		<description lang="en"><![CDATA[Allows users to authenticate using their Yubico Yubikey.  It supports both single and multi-factor authentication using the Yubico API.
+
+The YubiKey (http://www.yubico.com/yubikey) is a USB one-time-password generator for easy and secure logins.  It is operating system independent and does not require any client software so it works from any computer for any number of applications.  It has a very rugged design, and has no lifetime limitation.  It is about the same size as a small flash drive or a regular house key so it naturally fits on a key ring.  Once you receive your YubiKey, simply plug it in, press the button, and start logging in securely.]]></description>
+		<author-notes lang="en"><![CDATA[PHP 5 with cURL support highly recommended, however it fall back to OpenSSL, and further fall back to querying the Yubico servers over unencrypted HTTP.  Everything except signature verification (from the yubico servers) will work in PHP 4.]]></author-notes>
+		<author-group>
+			<author>
+				<realname><![CDATA[Tim Schlueter]]></realname>
+				<username><![CDATA[ModelRockettier]]></username>
+				<homepage><![CDATA[http://www.modelrockettier.com]]></homepage>
+				<email><![CDATA[yubikey_login@modelrockettier.com]]></email>
+			</author>
+		</author-group>
+		<mod-version>1.0.2</mod-version>
+		<installation>
+			<level>intermediate</level>
+			<time>900</time>
+			<target-version>3.0.10</target-version>
+		</installation>
+		<history>
+			<entry>
+				<date>2012-02-08</date>
+				<rev-version>1.0.2</rev-version>
+				<changelog lang="en">
+					<change><![CDATA[Reworded several things in the language file and the installation files.]]></change>
+					<change><![CDATA[Fixed an error message when no API id has been specified.]]></change>
+					<change><![CDATA[Mod no longer enables if the API ID or key are blank.]]></change>
+				</changelog>
+			</entry>
+			<entry>
+				<date>2010-08-25</date>
+				<rev-version>1.0.1</rev-version>
+				<changelog lang="en">
+					<change><![CDATA[sanitized SQL queries]]></change>
+					<change><![CDATA[removed phpbb_root_path from language file]]></change>
+					<change><![CDATA[removed a couple hard-coded language phrases]]></change>
+					<change><![CDATA[removed a couple SQL queries which were inside loops]]></change>
+				</changelog>
+			</entry>
+			<entry>
+				<date>2010-08-11</date>
+				<rev-version>1.0.0</rev-version>
+				<changelog lang="en">
+					<change><![CDATA[Added new YubiKey logging]]></change>
+					<change><![CDATA[Added MOD Version Check support]]></change>
+				</changelog>
+			</entry>
+			<entry>
+				<date>2010-07-16</date>
+				<rev-version>1.0.0b</rev-version>
+				<changelog lang="en">
+					<change><![CDATA[Initial Release]]></change>
+				</changelog>
+			</entry>
+		</history>
+		<link-group>
+			<link type="contrib" href="contrib/update_1.0.0b.xml" lang="en">Update from 1.0.0 Beta to 1.0.0</link>
+			<link type="contrib" href="contrib/update_1.0.0.xml" lang="en">Update from 1.0.0 to 1.0.1</link>
+			<link type="contrib" href="contrib/update_1.0.1.xml" lang="en">Update from 1.0.1 to 1.0.2</link>
+			<link type="contrib" href="contrib/mod_version_check.xml" lang="en">MOD Version Check</link>
+			<link type="template" href="contrib/subsilver2.xml" lang="en">subsilver2</link>
+		</link-group>
+	</header>
+	<action-group>
+		<copy>
+			<file from="root/adm/style/acp_yubikeys.html" to="adm/style/acp_yubikeys.html"/>
+			<file from="root/includes/functions_yubikey.php" to="includes/functions_yubikey.php"/>
+			<file from="root/includes/functions_yubikey_login.php" to="includes/functions_yubikey_login.php"/>
+			<file from="root/includes/acp/acp_yubikey_login.php" to="includes/acp/acp_yubikey_login.php"/>
+			<file from="root/includes/acp/info/acp_yubikey_login.php" to="includes/acp/info/acp_yubikey_login.php"/>
+			<file from="root/includes/ucp/ucp_yubikey_confirm.php" to="includes/ucp/ucp_yubikey_confirm.php"/>
+			<file from="root/includes/ucp/ucp_yubikey_login.php" to="includes/ucp/ucp_yubikey_login.php"/>
+			<file from="root/includes/ucp/ucp_yubikey_send.php" to="includes/ucp/ucp_yubikey_send.php"/>
+			<file from="root/includes/ucp/info/ucp_yubikey_login.php" to="includes/ucp/info/ucp_yubikey_login.php"/>
+			<file from="root/install_yubikey_login.php" to="install_yubikey_login.php"/>
+			<file from="root/language/en/email/user_lost_yubikey.txt" to="language/en/email/user_lost_yubikey.txt"/>
+			<file from="root/language/en/mods/yubikey_login.php" to="language/en/mods/yubikey_login.php"/>
+			<file from="root/styles/prosilver/template/ucp_yubikey_login.html" to="styles/prosilver/template/ucp_yubikey_login.html"/>
+			<file from="root/styles/prosilver/template/ucp_yubikey_send.html" to="styles/prosilver/template/ucp_yubikey_send.html"/>
+		</copy>
+		<open src="ucp.php">
+			<edit>
+				<find><![CDATA[		$message = $user->lang['PERMISSIONS_RESTORED'] . '<br /><br />' . sprintf($user->lang['RETURN_INDEX'], '<a href="' . append_sid("{$phpbb_root_path}index.$phpEx") . '">', '</a>');
+		trigger_error($message);
+
+	break;]]></find>
+				<action type="after-add"><![CDATA[	case 'yubikey_confirm':
+		$module->load('ucp', 'yubikey_confirm');
+		$module->display($user->lang['YUBIKEY_CONFIRM']);
+
+		redirect(append_sid("{$phpbb_root_path}index.$phpEx"));
+	break;
+
+	case 'yubikey_send':
+		$module->load('ucp', 'yubikey_send');
+		$module->display($user->lang['YUBIKEY_SEND']);
+	break;]]></action>
+			</edit>
+		</open>
+		<open src="adm/style/acp_users.html">
+			<edit>
+				<find><![CDATA[<!-- ELSEIF S_ATTACHMENTS -->]]></find>
+				<action type="before-add"><![CDATA[<!-- ELSEIF S_YUBIKEY_LOGIN -->
+
+<form id="user_overview" method="post" action="{U_ACTION}">
+
+<fieldset>
+	<legend>{L_USERNAME} : {L_ACP_USER_YUBIKEY_LOGIN}</legend>
+	<!-- BEGIN yubikey -->
+	<dl>
+		<dd>{yubikey.DEVICE} [<a href="{yubikey.DELETE_LINK}">{L_YUBIKEY_DELETE}</a>]</dd>
+	</dl>
+	<!-- BEGINELSE -->
+	<dl>
+		<dd>{L_NO_YUBIKEYS_USER}</dd>
+	</dl>
+	<!-- END yubikey -->
+</fieldset>
+</form>]]></action>
+			</edit>
+		</open>
+		<open src="includes/auth.php">
+			<edit>
+				<find><![CDATA[	function login($username, $password, $autologin = false, $viewonline = 1, $admin = 0)]]></find>
+				<inline-edit>
+					<inline-find><![CDATA[	function login($username, $password, $autologin = false, $viewonline = 1, $admin = 0]]></inline-find>
+					<inline-action type="after-add"><![CDATA[, $yubikey_otp = null]]></inline-action>
+				</inline-edit>
+			</edit>
+			<edit>
+				<find><![CDATA[		if (function_exists($method))
+		{
+			$login = $method($username, $password, $user->ip, $user->browser, $user->forwarded_for);]]></find>
+				<action type="replace-with"><![CDATA[		if (function_exists($method))
+		{
+			$multifactor = true;
+			if ($config['allow_yubikey_login'])
+			{
+				// login code
+				include($phpbb_root_path . 'includes/functions_yubikey_login.' . $phpEx);
+
+				// check if the user requires multifactor authentication and no yubikey was entered
+				$login = yubikey_check_required($username, $yubikey_otp);
+				if ($login)
+				{
+					return $login;
+				}
+
+				if ($yubikey_otp)
+				{
+					$login = yubikey_login($yubikey_otp, $username, $multifactor);
+					if (!$multifactor && !empty($password))
+					{
+						$multifactor = true;
+					}
+				}
+
+				if ($login && $login['status'] != LOGIN_SUCCESS)
+				{
+					return $login;
+				}
+			}
+
+			if ($multifactor)
+			{
+				$login = $method($username, $password);
+			}]]></action>
+			</edit>
+		</open>
+		<open src="includes/constants.php">
+			<edit>
+				<find><![CDATA[// Additional tables]]></find>
+				<action type="after-add"><![CDATA[define('YUBIKEY_TABLE',				$table_prefix . 'yubikey');]]></action>
+			</edit>
+		</open>
+		<open src="includes/functions.php">
+			<edit>
+				<find><![CDATA[		$username	= request_var('username', '', true);]]></find>
+				<action type="after-add"><![CDATA[		$yubikey_otp	= request_var('yubikey_otp', '');]]></action>
+			</edit>
+			<edit>
+				<find><![CDATA[		$result = $auth->login($username, $password, $autologin, $viewonline, $admin);]]></find>
+				<inline-edit>
+					<inline-find><![CDATA[		$result = $auth->login($username, $password, $autologin, $viewonline, $admin]]></inline-find>
+					<inline-action type="after-add"><![CDATA[, $yubikey_otp]]></inline-action>
+				</inline-edit>
+			</edit>
+			<edit>
+				<find><![CDATA[		// Special cases... determine
+		switch ($result['status'])
+		{]]></find>
+				<action type="after-add"><![CDATA[			case LOGIN_ERROR_EXTERNAL_AUTH:
+				$err = $user->lang[$result['error_msg']];
+				// Assign admin contact to some error messages
+				if (substr($result['error_msg'], 0, 19) == 'LOGIN_ERROR_YUBIKEY')
+				{
+					$err = (!$config['board_contact']) ? sprintf($user->lang[$result['error_msg']], '', '') : sprintf($user->lang[$result['error_msg']], '<a href="mailto:' . htmlspecialchars($config['board_contact']) . '">', '</a>');
+				}
+
+				// Append YubiKey Reset Link
+				if ($result['error_msg'] == 'LOGIN_ERROR_YUBIKEY_REQUIRED')
+				{
+					$err .= ' <a href="' . append_sid("{$phpbb_root_path}ucp.$phpEx", 'mode=yubikey_send') . '">' . $user->lang['YUBIKEY_RESET'] . '</a>';
+				}
+			break;
+]]></action>
+			</edit>
+			<edit>
+				<find><![CDATA[		'PASSWORD_CREDENTIAL'	=> ($admin) ? 'password_' . $credential : 'password',]]></find>
+				<action type="after-add"><![CDATA[		'YUBIKEY_CREDENTIAL'	=> 'yubikey_otp',]]></action>
+			</edit>
+			<edit>
+				<find><![CDATA[		'S_AUTOLOGIN_ENABLED'	=> ($config['allow_autologin']) ? true : false,]]></find>
+				<action type="after-add"><![CDATA[		'S_YUBIKEY_LOGIN_ENABLED'	=> ($config['allow_yubikey_login']) ? true : false,]]></action>
+			</edit>
+		</open>
+		<open src="includes/functions_user.php">
+			<edit>
+				<find><![CDATA[	$table_ary = array(USERS_TABLE, USER_GROUP_TABLE, TOPICS_WATCH_TABLE, FORUMS_WATCH_TABLE, ACL_USERS_TABLE, TOPICS_TRACK_TABLE, TOPICS_POSTED_TABLE, FORUMS_TRACK_TABLE, PROFILE_FIELDS_DATA_TABLE, MODERATOR_CACHE_TABLE, DRAFTS_TABLE, BOOKMARKS_TABLE, SESSIONS_KEYS_TABLE, PRIVMSGS_FOLDER_TABLE, PRIVMSGS_RULES_TABLE);]]></find>
+				<inline-edit>
+					<inline-find><![CDATA[	$table_ary = array(USERS_TABLE, USER_GROUP_TABLE, TOPICS_WATCH_TABLE, FORUMS_WATCH_TABLE, ACL_USERS_TABLE, TOPICS_TRACK_TABLE, TOPICS_POSTED_TABLE, FORUMS_TRACK_TABLE, PROFILE_FIELDS_DATA_TABLE, MODERATOR_CACHE_TABLE, DRAFTS_TABLE, BOOKMARKS_TABLE, SESSIONS_KEYS_TABLE, PRIVMSGS_FOLDER_TABLE, PRIVMSGS_RULES_TABLE]]></inline-find>
+					<inline-action type="after-add"><![CDATA[, YUBIKEY_TABLE]]></inline-action>
+				</inline-edit>
+			</edit>
+		</open>
+		<open src="includes/session.php">
+			<edit>
+				<find><![CDATA[		unset($lang_set);]]></find>
+				<action type="after-add"><![CDATA[		$this->add_lang('mods/yubikey_login');]]></action>
+			</edit>
+		</open>
+		<open src="includes/acp/acp_users.php">
+			<edit>
+				<find><![CDATA[				display_custom_bbcodes();
+
+			break;]]></find>
+				<action type="after-add"><![CDATA[			case 'yubikey_login':
+				include $phpbb_root_path . 'includes/functions_yubikey.' . $phpEx;
+				$action = isset($_GET['action']) ? request_var('action', '') : false;
+				$u = isset($_GET['u']) ? '&amp;u=' . request_var('u', 0) : '';
+
+				// Delete YubiKey
+				if ($action == "DelKey")
+				{
+					// Get YubiKey
+					$device = request_var('device', '');
+
+					if (!$device)
+					{
+						trigger_error($user->lang['YUBIKEY_ERROR_INVALID'] . adm_back_link($this->u_action . "&amp;u=" . $user_id), E_USER_WARNING);
+					}
+
+					delete_yubikey($device, $this->u_action . $u, true, true);
+				}
+
+				// Get user's YubiKeys
+				$sql = "SELECT deviceid FROM " . YUBIKEY_TABLE . " WHERE user_id = " . (int) $user_id;
+
+				$result = $db->sql_query($sql);
+				$delete_link = $this->u_action . "&amp;u={$user_id}&amp;action=DelKey";
+
+				while ($row = $db->sql_fetchrow($result))
+				{
+					$template->assign_block_vars('yubikey', array(
+						'DEVICE'		=> $row['deviceid'],
+						'DELETE_LINK'	=> $delete_link . "&amp;device=" . $row['deviceid'],
+					));
+				}
+				$db->sql_freeresult($result);
+
+				$template->assign_vars(array('S_YUBIKEY_LOGIN' => true));
+			break;
+]]></action>
+			</edit>
+		</open>
+		<open src="includes/acp/info/acp_users.php">
+			<edit>
+				<find><![CDATA[				'attach'		=> array('title' => 'ACP_USER_ATTACH', 'auth' => 'acl_a_user', 'display' => false, 'cat' => array('ACP_CAT_USERS')),]]></find>
+				<action type="after-add"><![CDATA[				'yubikey_login'		=> array('title' => 'ACP_YUBIKEY_USERS', 'auth' => 'acl_a_user', 'display' => false, 'cat' => array('ACP_CAT_USERS')),]]></action>
+			</edit>
+		</open>
+		<open src="styles/prosilver/template/index_body.html">
+			<edit>
+				<find><![CDATA[			<label for="password">{L_PASSWORD}:</label>&nbsp;<input type="password" name="password" id="password" size="10" class="inputbox" title="{L_PASSWORD}" />]]></find>
+				<action type="after-add"><![CDATA[			<!-- IF S_YUBIKEY_LOGIN_ENABLED -->
+			<label for="yubikey_otp"><a href="http://www.yubico.com/products/yubikey/">{L_YUBIKEY_OTP}</a>:</label>&nbsp;<input type="text" name="yubikey_otp" id="yubikey_otp" size="10" class="inputbox" title="{L_YUBIKEY_OTP_FULL}" />
+			<!-- ENDIF -->]]></action>
+			</edit>
+		</open>
+		<open src="styles/prosilver/template/login_body.html">
+			<edit>
+				<find><![CDATA[			<dd><input type="password" tabindex="2" id="{PASSWORD_CREDENTIAL}" name="{PASSWORD_CREDENTIAL}" size="25" class="inputbox autowidth" /></dd>]]></find>
+				<action type="after-add"><![CDATA[		<!-- IF S_YUBIKEY_LOGIN_ENABLED -->
+		</dl>
+		<dl>
+			<dt><label for="{YUBIKEY_CREDENTIAL}"><a href="http://www.yubico.com/products/yubikey/">{L_YUBIKEY_OTP}</a>:</label></dt>
+			<dd><input type="text" tabindex="3" name="{YUBIKEY_CREDENTIAL}" id="{YUBIKEY_CREDENTIAL}" size="25" class="inputbox autowidth" /></dd>
+		<!-- ENDIF -->]]></action>
+			</edit>
+		</open>
+		<php-installer><![CDATA[install_yubikey_login.php]]></php-installer>
+		<diy-instructions lang="en"><![CDATA[Go into the .MODS tab in the ACP and enable YubiKey logins.
+Also, don't forget to request an API key from Yubico at https://upgrade.yubico.com/getapikey/ (requires a YubiKey)
+
+
+To uninstall, remember to run install_yubikey_login.php?action=uninstall]]></diy-instructions>
+	</action-group>
+</mod>
